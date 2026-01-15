@@ -58,7 +58,7 @@ export function WorkStrip() {
           {loopItems.map((item, idx) => (
             <Link
               key={`${item.id}-${idx}`}
-              href={`/work/${item.id}`}
+              href={`/gallery/${item.id}`}
               className="block"
             >
               <motion.article
