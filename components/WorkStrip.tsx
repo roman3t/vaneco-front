@@ -13,11 +13,18 @@ export function WorkStrip() {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch(
-          // "https://gallery-api-dlbv.onrender.com/gallery"
-          "http://localhost:3333/gallery/home"
-        );
+        const API_GALLERY = process.env.NEXT_PUBLIC_API_GALLERY;
+
+        if (!API_GALLERY) {
+          throw new Error("NEXT_PUBLIC_API_GALLERY is not defined");
+        }
+
+        const res = await fetch(API_GALLERY, {
+          cache: "no-store",
+        });
+
         if (!res.ok) throw new Error("Failed to fetch gallery");
+
         const data: GalleryItem[] = await res.json();
         setItems(data);
       } catch (err) {
@@ -26,10 +33,10 @@ export function WorkStrip() {
         setLoading(false);
       }
     }
+
     load();
   }, []);
 
-  // duplicamos para loop infinito
   const loopItems = useMemo(() => {
     if (!items.length) return [];
     return [...items, ...items];
@@ -39,11 +46,9 @@ export function WorkStrip() {
 
   return (
     <section className="fixed left-0 right-0 bottom-0 z-40 px-4 pb-4 pt-3">
-      {/* gradiente superior */}
       <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-white/95 to-white/0" />
 
       <div className="relative overflow-hidden">
-        {/* TRACK */}
         <div
           className="worktrack flex w-max gap-3 will-change-transform"
           style={{
