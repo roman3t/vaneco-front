@@ -1,16 +1,20 @@
 import React from "react";
 import "./globals.css";
 import { MotionRoot } from "@/components/MotionRoot";
-import { Header } from "@/components/Header";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+import Navbar from "@/components/layout/Navbar/Navbar";
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="es">
       <body>
-        <Header />
+        <Navbar />
         <MotionRoot>{children}</MotionRoot>
       </body>
     </html>
   );
 }
-
